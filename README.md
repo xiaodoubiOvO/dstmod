@@ -6,12 +6,12 @@
 支持一键输出`dedicated_server_mods_setup.lua`
 
 #### 软件架构
-1. 正则表达式提取modID r'"workshop-(\d+)"'
-2. aiohttp异步请求mod页面获取mod信息
+1. 正则提取modoverrides.lua模组ID
+2. aiohttp异步请求mod页面获取信息
 3. PrettyTable打印表格
 
 #### 安装教程
-Windows可以在releases下载exe
+Windows可以在 [releases](https://gitee.com/yeshengdd/dstmod/releases/latest) 下载exe
 1. 安装Python3
 2. 安装依赖`pip install aiohttp prettytable`
 3. 下载dstmod.py
