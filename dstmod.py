@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import re, os, time, sys
+import re, os, time, sys, traceback
 import aiohttp
 import asyncio
 from prettytable import PrettyTable
@@ -9,7 +9,7 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36 Edg/99.0.1150.55',
     'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
 }
-print('=== 解析modoverrides.lua提取modID v0.5 ===')
+print('=== 解析modoverrides.lua提取modID v0.6 ===')
 try:
     path = os.path.join(sys.argv[1])
 except:
@@ -46,9 +46,8 @@ def main():
             data = f.read()
 
         modid = re.findall(r'"workshop-(\d+)"', data)
-        print(f'检测到 {len(modid)} 个MOD...')
+        print(f'检测到 {len(modid)} 个MOD，正在异步请求mod页面获取信息(需要网络)...')
         result = []
-        print('正在异步请求mod主页获取信息(需要网络)...')
         s_t = time.time()
         loop = asyncio.get_event_loop()
         result = loop.run_until_complete(get_mod_name(modid))
@@ -62,20 +61,23 @@ def main():
 
         # print('modID: {}\n'.format(','.join(modid)))
         mods = ['ServerModSetup("{}")'.format(i) for i in modid]
-        out = input('是否要输出到"dedicated_server_mods_setup.lua"[y/N]：') or 'n'
+        out = input('是否输出"dedicated_server_mods_setup.lua"[y/N](默认不输出)：') or 'n'
         if out in ['y', 'Y']:
             out_path = os.path.abspath('dedicated_server_mods_setup.lua')
             with open(out_path, 'w', encoding='utf-8') as f:
                 f.write('\n'.join(mods))
                 f.write('\n')
-            print('输出完毕：{}'.format(out_path))
+            print('已输出：{}'.format(out_path))
     else:
         print('错误：找不到modoverrides.lua文件，请确认路径是否正确')
-    input('执行完毕！')
 
 
 if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        pass
+        exit(0)
+    except:
+        print('执行遇到异常，错误日志：')
+        traceback.print_exc()
+    input('程序执行完毕...')
