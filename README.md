@@ -20,7 +20,7 @@ Windows可以在 [releases](https://gitee.com/yeshengdd/dstmod/releases/latest) 
 1. 运行程序
     - python dstmod.py modoverrides.lua路径
     - 或者把modoverrides.lua拖到exe打开
-2. 等待解析完成 期间需要请求mod页面获取mod名，可能需要网络(懂得都懂)
+2. 等待解析完成
 3. 最后输入"y"可以输出`dedicated_server_mods_setup.lua`
 4. 执行完毕
 
