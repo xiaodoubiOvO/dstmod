@@ -11,7 +11,7 @@
 3. PrettyTable打印表格
 
 #### 安装教程
-Windows可以在 [releases](https://gitee.com/yeshengdd/dstmod/releases/latest) 下载exe
+Windows可以在 [releases](https://gitee.com/xiaodoubiOvO/dstmod/releases) 下载exe
 1. 安装Python3
 2. 安装依赖`pip install aiohttp prettytable`
 3. 下载dstmod.py
